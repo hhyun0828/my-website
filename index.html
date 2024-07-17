@@ -4,82 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>종목 정보</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 구글 폰트 사용 */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: white;
+            background-color: #f4f4f9;
             margin: 0;
-            padding: 10px; /* 기본 패딩 크기 줄임 */
+            padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 10px; /* 기본 마진 크기 줄임 */
-            font-weight: 500;
-            font-size: 1.5em; /* 폰트 크기 줄임 */
+            margin-bottom: 20px;
         }
-
         table {
-            width: 100%; /* 화면에 꽉 차게 설정 */
-            max-width: 100%; /* 최대 너비를 100%로 설정 */
+            width: 100%;
             border-collapse: collapse;
-            margin-top: 10px; /* 기본 마진 크기 줄임 */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 5px; /* 기본 경계 반경 줄임 */
-            font-size: 0.4em; /* 폰트 크기 줄임 */
+            margin-bottom: 20px;
         }
-
         th, td {
-            padding: 4px; /* 내부 여백을 줄임 */
+            padding: 12px;
             border: 1px solid #ddd;
             text-align: center;
-            vertical-align: middle;
-            font-size: 0.4em; /* 폰트 크기를 줄임 */
-            white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
         }
-
         th {
             background-color: #4CAF50;
             color: white;
-            font-weight: 500;
-            text-transform: uppercase;
         }
-
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-
-        tr:hover {
-            background-color: #f1f1f1;
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
         }
-
-        td {
-            color: #333;
-        }
-
-        td:nth-child(1) {
-            font-weight: 700;
-        }
-
-        thead {
-            border-bottom: 2px solid #ddd;
+        .icon {
+            width: 50px;
+            height: 50px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>종목 정보</h1>
-    <table>
-        <thead>
-            <tr>
+    <div class="container">
+        <h1>종목 정보</h1>
+        <table id="stock-table">
+            <thead>
+                <tr>
                 <th>순위</th>
                 <th>종목코드</th>
                 <th>종목명</th>
@@ -104,32 +89,29 @@
         <tbody>
             <!-- JavaScript will populate this -->
         </tbody>
-    </table>
+     </table>
+    </div>
+    <footer>
+        <p>창조경제</p>
+        <img class="icon" src="team_icon.png" alt="Team Icon">
+    </footer>
     <script>
-        async function fetchData() {
-            const response = await fetch('data.json');  // JSON 파일 경로
-            const data = await response.json();
-            return data;
-        }
-
-        function populateTable(data) {
-            const tbody = document.querySelector('tbody');
-            tbody.innerHTML = '';
-
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                Object.values(row).forEach(cellData => {
-                    const td = document.createElement('td');
-                    td.textContent = cellData;
-                    tr.appendChild(td);
-                });
-                tbody.appendChild(tr);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            const data = await fetchData();
-            populateTable(data);
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('path/to/your/json/file.json')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#stock-table tbody');
+                    data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        Object.values(row).forEach(cell => {
+                            const td = document.createElement('td');
+                            td.textContent = cell;
+                            tr.appendChild(td);
+                        });
+                        tableBody.appendChild(tr);
+                    });
+                })
+                .catch(error => console.error('Error loading JSON data:', error));
         });
     </script>
 </body>
